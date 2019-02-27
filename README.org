@@ -1,0 +1,1 @@
+* 54fire'spacemacs config
