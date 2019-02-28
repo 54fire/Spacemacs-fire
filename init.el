@@ -505,14 +505,14 @@ before packages are loaded."
   ;; 去掉波浪号
   (spacemacs/toggle-vi-tilde-fringe-off)
   ;; 设置org-mode的标题符号
-  (setq org-bullets-bullet-list '("🖤" "◆" "▲" "▶" "🖤"))
+  (setq org-bullets-bullet-list '("🖤" "👉" "⏩" "▶"))
 
   ;; org-mode中table字体设置
   (defun set-buffer-variable-pitch ()
     (interactive)
-    (variable-pitch-mode t)
-    (setq line-spacing 3)
-    (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+    ;;(variable-pitch-mode t)
+    ;;(setq line-spacing 3)
+    ;;(set-face-attribute 'org-table nil :inherit 'fixed-pitch)
     ;;(set-face-attribute 'org-table nil :family "KaiTi")
     ;;(set-face-attribute 'org-code nil :inherit 'fixed-pitch)
     ;;(set-face-attribute 'org-block nil :inherit 'fixed-pitch)
