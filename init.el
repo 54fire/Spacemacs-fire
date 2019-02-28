@@ -48,6 +48,8 @@ This function should only modify configuration layer settings."
      git
      markdown
      chrome
+     unicode-fonts
+     emoji
      multiple-cursors
      ;; treemacs
      (neotree :variables
@@ -58,7 +60,8 @@ This function should only modify configuration layer settings."
      (chinese :variables
               chinese-enable-youdao-dict t
               chinese-enable-fcitx t)
-     org
+     (org :variables
+          org-enable-github-support t)
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -480,7 +483,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (spacemacs//set-monospaced-font   "Source Code Pro" "KaiTi" 16 20);;"YaHei Consolas Hybrid" 14 16)
+  ;;(spacemacs//set-monospaced-font   "Source Code Pro" "KaiTi" 16 20);;"YaHei Consolas Hybrid" 14 16)
 
   ;; (add-to-list 'load-path "~/.spacemacs.d/elpa/emacs-application-framework/")
   ;; (require 'eaf)
@@ -489,16 +492,34 @@ before packages are loaded."
 	(when (and (spacemacs/system-is-mswindows) window-system)
 	  (setq ispell-program-name "aspell")
 	  (setq w32-pass-alt-to-system nil)
-	  (setq w32-apps-modifier 'super)
-	  (dolist (charset '(kana han symbol cjk-misc bopomofo))
-	    (set-fontset-font (frame-parameter nil 'font)
-				                charset
-				                (font-spec :family "KaiTi" :size 14))))
+	  (setq w32-apps-modifier 'super))
+
+  ;; 设置中文为(微软雅黑)
+	(dolist (charset '(kana han symbol cjk-misc bopomofo))
+	  (set-fontset-font (frame-parameter nil 'font)
+				              charset
+				              (font-spec :family "Microsoft YaHei")))
 
   ;; 设置(powerline)为箭头
   (setq-default powerline-default-separator 'arrow)
   ;; 去掉波浪号
   (spacemacs/toggle-vi-tilde-fringe-off)
+  ;; 设置org-mode的标题符号
+  (setq org-bullets-bullet-list '("🖤" "◆" "▲" "▶" "🖤"))
+
+  ;; org-mode中table字体设置
+  (defun set-buffer-variable-pitch ()
+    (interactive)
+    (variable-pitch-mode t)
+    (setq line-spacing 3)
+    (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+    (set-face-attribute 'org-table nil :family "KaiTi")
+    ;;(set-face-attribute 'org-code nil :inherit 'fixed-pitch)
+    ;;(set-face-attribute 'org-block nil :inherit 'fixed-pitch)
+    ;;(set-face-attribute 'org-block-background nil :inherit 'fixed-pitch)
+    )
+
+  (add-hook 'org-mode-hook 'set-buffer-variable-pitch)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -514,7 +535,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(gmail-message-mode ham-mode html-to-markdown flymd edit-server company-auctex live-py-mode importmagic epc ctable concurrent deferred helm-pydoc cython-mode company-anaconda anaconda-mode pythonic youdao-dictionary names chinese-word-at-point pos-tip fcitx yasnippet-snippets helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-evil toc-org symon string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
+   '(emoji-cheat-sheet-plus company-emoji ucs-utils font-utils persistent-soft list-utils pcache gmail-message-mode ham-mode html-to-markdown flymd edit-server company-auctex live-py-mode importmagic epc ctable concurrent deferred helm-pydoc cython-mode company-anaconda anaconda-mode pythonic youdao-dictionary names chinese-word-at-point pos-tip fcitx yasnippet-snippets helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-evil toc-org symon string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
