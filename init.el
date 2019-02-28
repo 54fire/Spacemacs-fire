@@ -513,13 +513,17 @@ before packages are loaded."
     (variable-pitch-mode t)
     (setq line-spacing 3)
     (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-    (set-face-attribute 'org-table nil :family "KaiTi")
+    ;;(set-face-attribute 'org-table nil :family "KaiTi")
     ;;(set-face-attribute 'org-code nil :inherit 'fixed-pitch)
     ;;(set-face-attribute 'org-block nil :inherit 'fixed-pitch)
     ;;(set-face-attribute 'org-block-background nil :inherit 'fixed-pitch)
+    (set-face-attribute 'org-table nil
+                        :fontset (create-fontset-from-fontset-spec
+                                  (concat "-*-*-*-*-*--*-*-*-*-*-*-fontset-orgtable"
+                                          ",han:KaiTi:size=20")))
     )
-
   (add-hook 'org-mode-hook 'set-buffer-variable-pitch)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
