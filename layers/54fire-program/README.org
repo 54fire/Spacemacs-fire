@@ -1,7 +1,7 @@
-#+TITLE: 54fire layer
+#+TITLE: 54fire-program layer
 
 # The maximum height of the logo should be 200 pixels.
-[[img/54fire.png]]
+[[img/54fire-program.png]]
 
 # TOC links should be GitHub style anchors.
 * Table of Contents                                        :TOC_4_gh:noexport:
@@ -21,16 +21,14 @@ This layer adds support for something.
 
 * Install
 To use this configuration layer, add it to your =~/.spacemacs=. You will need to
-add =54fire= to the existing =dotspacemacs-configuration-layers= list in this
+add =54fire-program= to the existing =dotspacemacs-configuration-layers= list in this
 file.
 
 * Key bindings
 
-| Key Binding | Description          |
-|-------------+----------------------|
-| ~SPC x x x~ | Does thing01         |
-| ~SPC y o~   | open youdao-director |
-| ~SPC y p~   | play voice youdao    |
+| Key Binding | Description    |
+|-------------+----------------|
+| ~SPC x x x~ | Does thing01   |
 
 # Use GitHub URLs if you wish to link a Spacemacs documentation file or its heading.
 # Examples:

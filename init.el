@@ -1,7 +1,3 @@
-;; -*- mode: emacs-lisp; lexical-binding: t -*-
-;; This file is loaded by Spacemacs at startup.
-;; It must be stored in your home directory.
-
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
@@ -62,9 +58,6 @@ This function should only modify configuration layer settings."
               chinese-enable-fcitx t)
      (org :variables
           org-enable-github-support t)
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
@@ -84,7 +77,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(pangu-spacing)
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -483,16 +476,9 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  ;;(spacemacs//set-monospaced-font   "Source Code Pro" "KaiTi" 16 20);;"YaHei Consolas Hybrid" 14 16)
 
   ;; (add-to-list 'load-path "~/.spacemacs.d/elpa/emacs-application-framework/")
   ;; (require 'eaf)
-
-  (global-set-key (kbd "M-x") 'counsel-M-x)
-	(when (and (spacemacs/system-is-mswindows) window-system)
-	  (setq ispell-program-name "aspell")
-	  (setq w32-pass-alt-to-system nil)
-	  (setq w32-apps-modifier 'super))
 
   ;; 设置中文为(微软雅黑)
 	(dolist (charset '(kana han symbol cjk-misc bopomofo))
@@ -500,6 +486,12 @@ before packages are loaded."
 				              charset
 				              (font-spec :family "Microsoft YaHei")))
 
+  (setq abbrev-mode t)
+  (add-hook 'org-mode-hook 'abbrev-mode)
+  (define-abbrev-table 'global-abbrev-table '(
+					                                    ("8ms" "Microsoft")
+					                                    ("8lxy" "lixinyang")
+					                                    ))
   ;; 设置(powerline)为箭头
   (setq-default powerline-default-separator 'arrow)
   ;; 去掉波浪号
