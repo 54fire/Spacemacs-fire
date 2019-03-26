@@ -7,3 +7,5 @@
 ;; 有道词典的快捷方式
 (spacemacs/set-leader-keys "yo" 'youdao-dictionary-search-at-point+)
 (spacemacs/set-leader-keys "yp" 'youdao-dictionary-play-voice-at-point)
+
+(spacemacs/set-leader-keys "0" 'neotree-toggle)

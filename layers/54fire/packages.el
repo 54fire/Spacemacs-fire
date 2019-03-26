@@ -31,10 +31,19 @@
 
 (defconst 54fire-packages
   '(exec-path-from-shell
-    neotree
+    all-the-icons-dired
     )
   )
 
+(defun 54fire/init-all-the-icons-dired()
+  (use-package all-the-icons-dired
+    :init
+    :ensure t
+    :config
+    :hook ((dired-mode . all-the-icons-dired-mode)
+           (ranger-mode .all-the-icons-dired-mode))
+    ;;(add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+  ))
 (defun 54fire/init-exec-path-from-shell()
   (use-package exec-path-from-shell
     :init
@@ -48,57 +57,5 @@
         (setq exec-path-from-shell-arguments '("-l")))
       (exec-path-from-shell-initialize))))
 
-(defun 54fire/init-neotree()
-  (use-package neotree
-    :defer t
-    :ensure t
-    :commands (neotree-change-root
-               neotree-quick-look
-               neotree-toggle
-               neotree-hide
-               neotree-enter)
-    :init
-    (spacemacs/set-leader-keys "ft" 'neotree-toggle)
-    (spacemacs/set-leader-keys "0" 'neotree-show)
-    (setq neo-create-file-auto-open t
-          neo-auto-indent-point nil
-          neo-banner-message "Press ? for neotree help"
-          ;; neo-autorefresh t
-          neo-smart-open t
-          neo-mode-line-type 'none
-          neo-window-width 28
-          neo-show-updir-line nil
-          neo-theme (if (display-graphic-p) 'icons 'arrow)
-          neo-banner-message nil
-          neo-confirm-create-file #'off-p
-          neo-confirm-create-directory #'off-p
-          neo-show-hidden-files nil
-          neo-keymap-style 'concise
-          neo-hidden-regexp-list
-          '(;; vcs folders
-            "^\\.\\(DS_store\\|git\\|gitignore\\|hg\\|svn\\)$"
-            ;; compiled files
-            "\\.\\(pyc\\|o\\|elc\\|lock\\|css.map\\)$"
-            ;; generated files, caches or local pkgs
-            "^\\(node_modules\\|.\\(project\\|cask\\|yardoc\\|sass-cache\\)\\)$"
-            ;; org-mode folders
-            "^\\.\\(sync\\|export\\|attach\\)$"
-            "~$" "\\.emacs*"
-            ;; ignore bazel file
-            "^bazel-*"
-            "^#.*#$"))
-    :config
-    (when (bound-and-true-p evil-mode)
-      (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
-      (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-      (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-      (evil-define-key 'normal neotree-mode-map (kbd "h") 'neotree-select-up-node)
-      (evil-define-key 'normal neotree-mode-map (kbd "l") 'neotree-change-root)
-      (evil-define-key 'normal neotree-mode-map (kbd "c") 'neotree-create-node)
-      (evil-define-key 'normal neotree-mode-map (kbd "C") 'neotree-copy-node)
-      (evil-define-key 'normal neotree-mode-map (kbd "d") 'neotree-delete-node)
-      (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-      (evil-define-key 'normal neotree-mode-map (kbd "r") 'neotree-rename-node)
-      (evil-define-key 'normal neotree-mode-map (kbd "s") 'neotree-hidden-file-toggle)))
-  )
+
 ;;; packages.el ends here
