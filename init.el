@@ -21,7 +21,6 @@ This function should only modify configuration layer settings."
    ;; If non-nil then Spacemacs will ask for confirmation before installing
    ;; a layer lazily. (default t)
    dotspacemacs-ask-for-lazy-installation t
-
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
@@ -43,24 +42,20 @@ This function should only modify configuration layer settings."
      latex
      git
      markdown
-     chrome
-     unicode-fonts
-     emoji
+     ;; emoji
      multiple-cursors
-     ;; treemacs
-     (neotree :variables
-              neo-show-hidden-files nil)
+     ;;(neotree :variables
+     ;;        neo-show-hidden-files nil)
      (shell :variables
             shell-default-shell 'ansi-term
             shell-default-term-shell "/bin/zsh")
-     (chinese :variables
-              chinese-enable-youdao-dict t
-              chinese-enable-fcitx t)
+     (chinese :packages youdao-dictionary fcitx
+              :variables chinese-enable-fcitx nil
+              chinese-enable-youdao-dict t)
      (org :variables
           org-enable-github-support t)
      ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
+     ;; syntax-checking ;; version-control
      54fire
      )
 
@@ -77,7 +72,21 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(pangu-spacing)
+    dotspacemacs-excluded-packages '(treemacs treemacs-evil pangu-spacing magit-gh-pulls magit-gitflow  evil-mc realgud tern company-tern
+                                                    evil-args evil-ediff evil-exchange evil-unimpaired
+                                                    evil-indent-plus volatile-highlights smartparens
+                                                    holy-mode skewer-mode rainbow-delimiters
+                                                    highlight-indentation vi-tilde-fringe eyebrowse ws-butler
+                                                    smooth-scrolling org-repo-todo org-download org-timer
+                                                    livid-mode git-gutter git-gutter-fringe  evil-escape
+                                                    leuven-theme gh-md evil-lisp-state spray lorem-ipsum symon
+                                                    ac-ispell ace-jump-mode auto-complete auto-dictionary
+                                                    clang-format define-word google-translate disaster epic
+                                                    fancy-battery org-present orgit orglue
+                                                    helm-flyspell flyspell-correct-helm clean-aindent-mode
+                                                    helm-c-yasnippet ace-jump-helm-line helm-make magithub
+                                                    helm-themes helm-swoop helm-spacemacs-help smeargle
+                                                    ido-vertical-mode flx-ido company-quickhelp ivy-rich helm-purpose)
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -101,7 +110,6 @@ It should only modify the values of Spacemacs settings."
    ;; EXPERIMENTAL.org at to root of the git repository.
    ;; (default nil)
    dotspacemacs-enable-emacs-pdumper nil
-
    ;; File path pointing to emacs 27.1 executable compiled with support
    ;; for the portable dumper (this is currently the branch pdumper).
    ;; (default "emacs-27.0.50")
@@ -133,8 +141,8 @@ It should only modify the values of Spacemacs settings."
    ;; (default '(100000000 0.1))
    dotspacemacs-gc-cons '(100000000 0.1)
 
-   ;; If non-nil then Spacelpa repository is the primary source to install
-   ;; a locked version of packages. If nil then Spacemacs will install the
+   ;; a locked version of packages.macs will install the
+     ;; If non-nil then Spacelpa repository is the primary source to install
    ;; latest version of packages from MELPA. (default nil)
    dotspacemacs-use-spacelpa nil
 
@@ -195,6 +203,7 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(;; spacemacs-dark
+                         gruvbox
                          monokai
                          spacemacs-light)
 
@@ -292,9 +301,9 @@ It should only modify the values of Spacemacs settings."
    ;; (default 'bottom)
    dotspacemacs-which-key-position 'bottom
 
+     ;; `switch-to-buffer' displahe current window even if
+   ;; another same-purpose window on-nil, `switch-to-buffer'
    ;; Control where `switch-to-buffer' displays the buffer. If nil,
-   ;; `switch-to-buffer' displays the buffer in the current window even if
-   ;; another same-purpose window is available. If non-nil, `switch-to-buffer'
    ;; displays the buffer in a same-purpose window even if the buffer can be
    ;; displayed in the current window. (default nil)
    dotspacemacs-switch-to-buffer-prefers-purpose nil
@@ -318,8 +327,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-maximized-at-startup t
 
    ;; A value from the range (0..100), in increasing opacity, which describes
+   ;; Transparency can be toggled tnsparency'. (default 90)
    ;; the transparency level of a frame when it's active or selected.
-   ;; Transparency can be toggled through `toggle-transparency'. (default 90)
    dotspacemacs-active-transparency 90
 
    ;; A value from the range (0..100), in increasing opacity, which describes
@@ -359,10 +368,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-line-numbers '(:relative nil
                                :disabled-for-modes dired-mode
                                          doc-view-mode
-                                         markdown-mode
-                                         org-mode
                                          pdf-view-mode
-                                         text-mode
                                          eaf-mode
                                :size-limit-kb 1000)
 
@@ -457,10 +463,10 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  (setq configuration-layer-elpa-archives '(
-                                            ("melpa" . "http://melpa.org/packages/")
-                                            ("org" . "http://orgmode.org/elpa/")
-                                            ("gnu" . "http://elpa.gnu.org/packages/")))
+(setq configuration-layer-elpa-archives
+    '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+      ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+      ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
   )
 
 (defun dotspacemacs/user-load ()
@@ -476,29 +482,31 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-
   ;; (add-to-list 'load-path "~/.spacemacs.d/elpa/emacs-application-framework/")
+  ;; (require 'init-dired)
   ;; (require 'eaf)
+  (add-to-list 'load-path "~/.spacemacs.d/layers/54fire-awesome-tab/")
+  (require 'init-awesome-tab)
 
   ;; 设置中文为(微软雅黑)
-	(dolist (charset '(kana han symbol cjk-misc bopomofo))
-	  (set-fontset-font (frame-parameter nil 'font)
-				              charset
-				              (font-spec :family "Microsoft YaHei")))
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+	(set-fontset-font (frame-parameter nil 'font)
+				      charset
+				      (font-spec :family "Microsoft YaHei")))
 
   (setq abbrev-mode t)
   (add-hook 'org-mode-hook 'abbrev-mode)
   (define-abbrev-table 'global-abbrev-table '(
-					                                    ("8ms" "Microsoft")
-					                                    ("8lxy" "lixinyang")
-					                                    ))
+					                          ("8ms" "Microsoft")
+					                          ("8lxy" "lixinyang")
+					                          ))
   ;; 设置(powerline)为箭头
   (setq-default powerline-default-separator 'arrow)
   ;; 去掉波浪号
-  (spacemacs/toggle-vi-tilde-fringe-off)
+  (setq spacemacs/toggle-vi-tilde-fringe-off t)
   ;; 设置org-mode的标题符号
-  (setq org-bullets-bullet-list '("🖤" "👉" "⏩" "▶"))
-
+  (setq org-bullets-bullet-list
+        '("✡" "✽" "✲" "✱" "✻" "✼" "✽" "✾" "✿" "❀" "❁" "❂" "❃" "❄" "❅" "❆" "❇"))
   ;; org-mode中table字体设置
   (defun set-buffer-variable-pitch ()
     (interactive)
@@ -512,10 +520,11 @@ before packages are loaded."
     (set-face-attribute 'org-table nil
                         :fontset (create-fontset-from-fontset-spec
                                   (concat "-*-*-*-*-*--*-*-*-*-*-*-fontset-orgtable"
-                                          ",han:KaiTi:size=20")))
-    )
+                                          ",han:KaiTi:size=20"
+                                          ",default: Source Code Pro:size=16"))))
   (add-hook 'org-mode-hook 'set-buffer-variable-pitch)
 
+  (setq neo-theme 'icons)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -531,12 +540,13 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(emoji-cheat-sheet-plus company-emoji ucs-utils font-utils persistent-soft list-utils pcache gmail-message-mode ham-mode html-to-markdown flymd edit-server company-auctex live-py-mode importmagic epc ctable concurrent deferred helm-pydoc cython-mode company-anaconda anaconda-mode pythonic youdao-dictionary names chinese-word-at-point pos-tip fcitx yasnippet-snippets helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-evil toc-org symon string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
+   (quote
+    (treemacs ht pfuture youdao-dictionary gruvbox-theme autothemer emoji-cheat-sheet-plus company-emoji ucs-utils font-utils persistent-soft list-utils pcache gmail-message-mode ham-mode html-to-markdown flymd edit-server company-auctex live-py-mode importmagic epc ctable concurrent deferred helm-pydoc cython-mode company-anaconda anaconda-mode pythonic names chinese-word-at-point pos-tip fcitx yasnippet-snippets helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-evil toc-org symon string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(awesome-tab-default ((t (:background "#282828" :foreground "black")))))
 )
 
