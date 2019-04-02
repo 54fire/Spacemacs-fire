@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: ctexarttemplate
+# key: ctexarttemplate
+# --
+
+%%% Author: 54fire
+%%%
+\documentclass[a4paper,zihao=-4]{ctexart}
+\usepackage[hmarign=1.25in,vmargin=1in]{geometry}
+\begin{document}
+$0
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t

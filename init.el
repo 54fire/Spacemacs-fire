@@ -39,9 +39,11 @@ This function should only modify configuration layer settings."
      auto-completion
      better-defaults
      emacs-lisp
-     latex
+     (latex :variables latex-build-command "LatexMk")
      git
      markdown
+     ranger
+     pdf
      ;; emoji
      multiple-cursors
      (neotree :variables
@@ -54,8 +56,6 @@ This function should only modify configuration layer settings."
               chinese-enable-youdao-dict t)
      (org :variables
           org-enable-github-support t)
-     ;; spell-checking
-     ;; syntax-checking ;; version-control
      54fire
      )
 
@@ -72,22 +72,8 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(
-                  pangu-spacing magit-gh-pulls magit-gitflow  evil-mc realgud tern company-tern
-                                evil-args evil-ediff evil-exchange evil-unimpaired
-                                evil-indent-plus volatile-highlights smartparens
-                                holy-mode skewer-mode rainbow-delimiters
-                                highlight-indentation vi-tilde-fringe eyebrowse ws-butler
-                                smooth-scrolling org-repo-todo org-download org-timer
-                                livid-mode git-gutter git-gutter-fringe  evil-escape
-                                leuven-theme gh-md evil-lisp-state spray lorem-ipsum symon
-                                ac-ispell ace-jump-mode auto-complete auto-dictionary
-                                clang-format define-word google-translate disaster epic
-                                fancy-battery org-present orgit orglue
-                                helm-flyspell flyspell-correct-helm clean-aindent-mode
-                                helm-c-yasnippet ace-jump-helm-line helm-make magithub
-                                helm-themes helm-swoop helm-spacemacs-help smeargle
-                                ido-vertical-mode flx-ido company-quickhelp ivy-rich helm-purpose)
+   dotspacemacs-excluded-packages '(treemacs treemacs-evil
+                                             )
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -204,6 +190,7 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(;; spacemacs-dark
+                         tangotango
                          gruvbox
                          monokai
                          spacemacs-light)
@@ -371,6 +358,8 @@ It should only modify the values of Spacemacs settings."
                                          doc-view-mode
                                          pdf-view-mode
                                          eaf-mode
+                                         latex-mode
+                                         org-mode
                                :size-limit-kb 1000)
 
    ;; Code folding method. Possible values are `evil' and `origami'.
@@ -511,13 +500,6 @@ before packages are loaded."
   ;; org-mode中table字体设置
   (defun set-buffer-variable-pitch ()
     (interactive)
-    ;;(variable-pitch-mode t)
-    ;;(setq line-spacing 3)
-    ;;(set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-    ;;(set-face-attribute 'org-table nil :family "KaiTi")
-    ;;(set-face-attribute 'org-code nil :inherit 'fixed-pitch)
-    ;;(set-face-attribute 'org-block nil :inherit 'fixed-pitch)
-    ;;(set-face-attribute 'org-block-background nil :inherit 'fixed-pitch)
     (set-face-attribute 'org-table nil
                         :fontset (create-fontset-from-fontset-spec
                                   (concat "-*-*-*-*-*--*-*-*-*-*-*-fontset-orgtable"
@@ -526,11 +508,24 @@ before packages are loaded."
   (add-hook 'org-mode-hook 'set-buffer-variable-pitch)
 
   (setq neo-theme 'icons)
+  (make-sparse-keymap "d")
 
+
+  (load "auctex.el" nil t t)
+  ;; (load "preview.el" nil t t)
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq-default TeX-master nil)
+  (setq TeX-global-PDF-mode t)
+  (setq-default TeX-engine (quote xetex))
+  (add-hook 'LaTeX-mode-hook 'cdlatex-mode)
+  (add-hook 'LaTeX-mode-hook 'auto-complete-mode)
+
+  (spacemacs/toggle-centered-point-globally-on)
+  (set-face-background 'hl-line "#000000")
+  ;; ui 设置
   )
 
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -541,14 +536,12 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (treemacs ht pfuture youdao-dictionary gruvbox-theme autothemer emoji-cheat-sheet-plus company-emoji ucs-utils font-utils persistent-soft list-utils pcache gmail-message-mode ham-mode html-to-markdown flymd edit-server company-auctex live-py-mode importmagic epc ctable concurrent deferred helm-pydoc cython-mode company-anaconda anaconda-mode pythonic names chinese-word-at-point pos-tip fcitx yasnippet-snippets helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-evil toc-org symon string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line))))
+ '(awesome-tab-background-color "#2e3434"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(awesome-tab-default ((t (:background "#282828" :foreground "black")))))
+ '(awesome-tab-default ((t (:background "#2e3434" :foreground "black"))))
+ '(awesome-tab-selected ((t (:background "#2d2d2d" :foreground "white")))))
 )
-
