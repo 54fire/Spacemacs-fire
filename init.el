@@ -511,12 +511,12 @@ before packages are loaded."
   (make-sparse-keymap "d")
 
 
-  (load "auctex.el" nil t t)
+  ;; (load "auctex.el" nil t t)
   ;; (load "preview.el" nil t t)
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t)
+  ;; (setq TeX-auto-save t)
+  ;; (setq TeX-parse-self t)
   (setq-default TeX-master nil)
-  (setq TeX-global-PDF-mode t)
+  ;; (setq TeX-global-PDF-mode t)
   (setq-default TeX-engine (quote xetex))
   (add-hook 'LaTeX-mode-hook 'cdlatex-mode)
   (add-hook 'LaTeX-mode-hook 'auto-complete-mode)
@@ -524,6 +524,7 @@ before packages are loaded."
   (spacemacs/toggle-centered-point-globally-on)
   (set-face-background 'hl-line "#000000")
   ;; ui 设置
+  ;; xelatex -synctex=1 -interaction=nonstopmode %.tex
   )
 
 (defun dotspacemacs/emacs-custom-settings ()
