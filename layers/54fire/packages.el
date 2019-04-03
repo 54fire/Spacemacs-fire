@@ -34,14 +34,9 @@
     all-the-icons-dired
     ranger
     cdlatex
-    auto-complete-auctex
     )
   )
 
-(defun 54fire/init-auto-complete-auctex()
-  (use-package auto-complete-auctex
-    :ensure t
-    :init))
 
 (defun 54fire/post-init-ranger()
   (setq ranger-cleanup-on-disable t)

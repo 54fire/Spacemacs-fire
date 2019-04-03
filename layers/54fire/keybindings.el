@@ -9,3 +9,9 @@
 (spacemacs/set-leader-keys "yp" 'youdao-dictionary-play-voice-at-point)
 
 (spacemacs/set-leader-keys "0" 'neotree-toggle)
+
+
+(spacemacs/set-leader-keys (kbd "tl") 'awesome-tab-forward)
+(spacemacs/set-leader-keys (kbd "th") 'awesome-tab-backward)
+(spacemacs/set-leader-keys (kbd "tt") 'awesome-tab-switch-group)
+

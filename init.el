@@ -52,7 +52,7 @@ This function should only modify configuration layer settings."
             shell-default-shell 'ansi-term
             shell-default-term-shell "/bin/zsh")
      (chinese :packages youdao-dictionary fcitx
-              :variables chinese-enable-fcitx nil
+              :variables chinese-enable-fcitx t
               chinese-enable-youdao-dict t)
      (org :variables
           org-enable-github-support t)
@@ -72,7 +72,7 @@ This function should only modify configuration layer settings."
    dotspacemacs-frozen-packages '()
 
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(treemacs treemacs-evil
+   dotspacemacs-excluded-packages '(treemacs treemacs-evil vi-tilde-fringe
                                              )
 
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -473,10 +473,11 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   ;; (add-to-list 'load-path "~/.spacemacs.d/elpa/emacs-application-framework/")
-  ;; (require 'init-dired)
   ;; (require 'eaf)
-  (add-to-list 'load-path "~/.spacemacs.d/layers/54fire-awesome-tab/")
+  (add-to-list 'load-path "~/.spacemacs.d/layers/54fire-config/")
   (require 'init-awesome-tab)
+  (require 'init-latex)
+  (require 'init-org)
 
   ;; 设置中文为(微软雅黑)
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
@@ -492,39 +493,11 @@ before packages are loaded."
 					                          ))
   ;; 设置(powerline)为箭头
   (setq-default powerline-default-separator 'arrow)
-  ;; 去掉波浪号
-  (setq spacemacs/toggle-vi-tilde-fringe-off t)
-  ;; 设置org-mode的标题符号
-  (setq org-bullets-bullet-list
-        '("✡" "✽" "✲" "✱" "✻" "✼" "✽" "✾" "✿" "❀" "❁" "❂" "❃" "❄" "❅" "❆" "❇"))
-  ;; org-mode中table字体设置
-  (defun set-buffer-variable-pitch ()
-    (interactive)
-    (set-face-attribute 'org-table nil
-                        :fontset (create-fontset-from-fontset-spec
-                                  (concat "-*-*-*-*-*--*-*-*-*-*-*-fontset-orgtable"
-                                          ",han:KaiTi:size=20"
-                                          ",default: Source Code Pro:size=16"))))
-  (add-hook 'org-mode-hook 'set-buffer-variable-pitch)
-
   (setq neo-theme 'icons)
   (make-sparse-keymap "d")
-
-
-  ;; (load "auctex.el" nil t t)
-  ;; (load "preview.el" nil t t)
-  ;; (setq TeX-auto-save t)
-  ;; (setq TeX-parse-self t)
-  (setq-default TeX-master nil)
-  ;; (setq TeX-global-PDF-mode t)
-  (setq-default TeX-engine (quote xetex))
-  (add-hook 'LaTeX-mode-hook 'cdlatex-mode)
-  (add-hook 'LaTeX-mode-hook 'auto-complete-mode)
-
   (spacemacs/toggle-centered-point-globally-on)
-  (set-face-background 'hl-line "#000000")
-  ;; ui 设置
-  ;; xelatex -synctex=1 -interaction=nonstopmode %.tex
+  (set-face-background 'hl-line "#060606")
+  (remove-hook 'pdf-view-mode-hook 'centered-cursor-mode)
   )
 
 (defun dotspacemacs/emacs-custom-settings ()
@@ -532,17 +505,4 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(awesome-tab-background-color "#2e3434"))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(awesome-tab-default ((t (:background "#2e3434" :foreground "black"))))
- '(awesome-tab-selected ((t (:background "#2d2d2d" :foreground "white")))))
 )
